@@ -25,3 +25,12 @@
 - ログに機密情報を出力しない。
 
 ## リポジトリ固有
+- **type**: Development Tool / IDE Configuration
+**platforms:**
+  - IntelliJ IDEA IDE
+- **status**: TODO: i18n support, one-liner installer
+- **purpose**: Simplifies plugin testing workflow by providing pre-configured run environments
+**compatible_servers:**
+  - Bukkit
+  - Spigot
+  - PaperMC

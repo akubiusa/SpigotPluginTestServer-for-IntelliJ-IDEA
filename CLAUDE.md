@@ -13,7 +13,13 @@
 - 前提・仮定・不確実性を明示し、仮定を事実のように扱わない。
 
 ## プロジェクト概要
-- 目的: Bukkit / Spigot / PaperMC のプラグインをテストするためのサーバを立てられるように IntelliJ IDEA の実行構成を作成します。 Create a running configuration of IntelliJ IDEA so that you can set up a server to test the Bukkit / Spigot / PaperMC p...
+Provides IntelliJ IDEA run configurations to easily set up and test Bukkit/Spigot/PaperMC server plugins.
+
+### 技術スタック
+- **言語**: Java, XML (IntelliJ config)
+- **フレームワーク**: Bukkit, Spigot, PaperMC
+- **パッケージマネージャー**: Maven or Gradle (plugin dependent)
+- **主要な依存関係**:
 
 ## 重要ルール
 - 会話言語: 日本語
@@ -42,25 +48,48 @@
 - TypeScript 使用時は `skipLibCheck` で回避しない。
 - 関数やインターフェースには docstring（JSDoc など）を記載する。
 
+### コーディング規約
+- **notes**: IntelliJ IDEA configuration project, no code linting
+
 ## 相談ルール
 - Codex CLI: 実装レビュー、局所設計、整合性確認に使う。
 - Gemini CLI: 外部仕様や最新情報の確認に使う。
 - 他エージェントの指摘は黙殺せず、採用または理由を明記して不採用とする。
 
-## 開発コマンド
+### 開発コマンド
 ```bash
-# README を確認してください
+# install
+Clone repository
+
+# dev
+Copy .run/ configurations to project
+
+# build
+Maven/Gradle (plugin dependent)
+
+# test
+Run via IntelliJ IDE
+
 ```
 
-## アーキテクチャと主要ファイル
+### プロジェクト構造
+**ルートファイル:**
+- `README.md`
+
+**主要ディレクトリ:**
+- `.git`
+- `.run`
 
 ## 実装パターン
+- 既存のコードパターンに従う。
+- プロジェクト固有の実装ガイドラインがある場合はそれに従う。
 
 ## テスト
 - 方針: 変更内容に応じてテストを追加する。
 
 ## ドキュメント更新ルール
 - 更新タイミング: 実装確定後、同一コミットまたは追加コミットで更新する。
+- README、API ドキュメント、コメント等は常に最新状態を保つ。
 
 ## 作業チェックリスト
 
@@ -91,3 +120,12 @@
 6. PR 本文の崩れがないことを確認する。
 
 ## リポジトリ固有
+- **type**: Development Tool / IDE Configuration
+**platforms:**
+  - IntelliJ IDEA IDE
+- **status**: TODO: i18n support, one-liner installer
+- **purpose**: Simplifies plugin testing workflow by providing pre-configured run environments
+**compatible_servers:**
+  - Bukkit
+  - Spigot
+  - PaperMC

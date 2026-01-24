@@ -15,7 +15,13 @@
 - 日本語と英数字の間には半角スペースを入れる。
 
 ## プロジェクト概要
-- 目的: Bukkit / Spigot / PaperMC のプラグインをテストするためのサーバを立てられるように IntelliJ IDEA の実行構成を作成します。 Create a running configuration of IntelliJ IDEA so that you can set up a server to test the Bukkit / Spigot / PaperMC p...
+Provides IntelliJ IDEA run configurations to easily set up and test Bukkit/Spigot/PaperMC server plugins.
+
+### 技術スタック
+- **言語**: Java, XML (IntelliJ config)
+- **フレームワーク**: Bukkit, Spigot, PaperMC
+- **パッケージマネージャー**: Maven or Gradle (plugin dependent)
+- **主要な依存関係**:
 
 ## コーディング規約
 - フォーマット: 既存設定（ESLint / Prettier / formatter）に従う。
@@ -23,9 +29,20 @@
 - コメント言語: 日本語
 - エラーメッセージ: 英語
 
-## 開発コマンド
+### 開発コマンド
 ```bash
-# README を確認してください
+# install
+Clone repository
+
+# dev
+Copy .run/ configurations to project
+
+# build
+Maven/Gradle (plugin dependent)
+
+# test
+Run via IntelliJ IDE
+
 ```
 
 ## 注意事項
@@ -34,3 +51,12 @@
 - 既存のプロジェクトルールがある場合はそれを優先する。
 
 ## リポジトリ固有
+- **type**: Development Tool / IDE Configuration
+**platforms:**
+  - IntelliJ IDEA IDE
+- **status**: TODO: i18n support, one-liner installer
+- **purpose**: Simplifies plugin testing workflow by providing pre-configured run environments
+**compatible_servers:**
+  - Bukkit
+  - Spigot
+  - PaperMC
