@@ -1,7 +1,7 @@
 # Copilot code review instructions
 
 This repository is a set of IntelliJ IDEA run configurations (`.run/*.run.xml`) and
-helper scripts (`buildAndTest.sh`, `buildAndTest.bat`) for running a local
+helper scripts (`.run/buildAndTest.sh`, `.run/buildAndTest.bat`) for running a local
 Bukkit / Spigot / PaperMC test server. It has no compiled source, tests, or CI.
 
 ## What to focus on in review
@@ -10,9 +10,11 @@ Bukkit / Spigot / PaperMC test server. It has no compiled source, tests, or CI.
   Flag genuine bugs: existence checks with the wrong test operator (e.g. `-f` on a
   directory), inverted create-if-missing logic, missing quoting around paths, and
   incorrect exit/`errorlevel` handling.
-- **Cross-platform parity.** `buildAndTest.sh` (macOS/Linux) and `buildAndTest.bat`
-  (Windows) implement the same workflow. Flag changes that make one diverge from the
-  other in behavior (server directory, downloaded artifacts, RCON command, ports).
+- **Cross-platform parity.** `.run/buildAndTest.sh` (macOS/Linux) and
+  `.run/buildAndTest.bat` (Windows) are intended to implement the same workflow, though
+  they already diverge today (e.g. server directory `server/` vs `run/`, and
+  `PLUGIN_NAME`/`JAR_FILE` values). Flag *new* changes that widen this behavioral gap
+  (server directory, downloaded artifacts, RCON command, ports).
 - **IntelliJ run-config integrity.** In `.run/*.run.xml`, flag broken XML, changed
   run-configuration names that break the reload → build dependency, or removed
   `$PROJECT_DIR$` macros.

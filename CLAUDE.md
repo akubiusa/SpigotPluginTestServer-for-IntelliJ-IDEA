@@ -13,12 +13,19 @@ Paper test server via RCON.
 
 - `.run/*.run.xml` — IntelliJ IDEA run configurations (`ProjectRunConfigurationManager`):
   - `Package build.run.xml` — Maven `clean package` run configuration.
-  - `ReBuild And Reload (Mac).run.xml` — shell run config that runs `buildAndTest.sh`.
-  - `ReBuild And Reload (Win).run.xml` — shell run config that runs `buildAndTest.bat`.
-- `.run/buildAndTest.sh` — macOS / Linux script: prepares a Paper server directory,
-  downloads Paper and mcrconapi, writes `server.properties`, copies the built jar
-  into `plugins/`, then reloads via RCON (falling back to starting the server).
-- `.run/buildAndTest.bat` — Windows equivalent of the above.
+  - `ReBuild And Reload (Mac).run.xml` — shell run config that runs `.run/buildAndTest.sh`.
+    Note: its pre-run Maven task currently references a run configuration named
+    `MyMaid4 build`, which does not exist under `.run/` (only `Package build` does),
+    so the dependency is stale — see "Working on this repository" below.
+  - `ReBuild And Reload (Win).run.xml` — shell run config that runs `.run/buildAndTest.bat`;
+    its pre-run task correctly references `Package build`.
+- `.run/buildAndTest.sh` — macOS / Linux script. Intended workflow: prepare a Paper
+  server directory, download Paper and mcrconapi, write `server.properties`, copy the
+  built jar into `plugins/`, then reload via RCON (falling back to starting the server).
+  Note: the existence checks that gate these steps are currently inverted (e.g.
+  `[ -f "server/" ]`), so the script's real behavior diverges from this intent.
+- `.run/buildAndTest.bat` — Windows counterpart of the same intended workflow (it uses a
+  `run/` server directory rather than `server/`).
 - `README.md` — short bilingual (Japanese / English) description.
 
 ## Working on this repository
@@ -29,15 +36,20 @@ Paper test server via RCON.
   Spigot plugin project (the scripts assume a Maven `target/<plugin>.jar` output and
   a locally reachable Minecraft server on the RCON port).
 - Keep `buildAndTest.sh` and `buildAndTest.bat` behaviorally in sync when editing one
-  of them; they are two platform variants of the same workflow.
+  of them; they are two platform variants of the same intended workflow, but note they
+  already diverge today (e.g. server directory `server/` vs `run/`, and different
+  `PLUGIN_NAME`/`JAR_FILE` values).
 - The `.run/*.run.xml` files use IntelliJ's `$PROJECT_DIR$` macro and reference each
   other by run-configuration name (e.g. the reload configs depend on a Maven build
   config). Preserve those names and macros when editing.
 
 ## Conventions
 
-- The scripts contain project-specific placeholders (`PLUGIN_NAME`, `JAR_FILE`) that
-  a consumer edits for their own plugin. Do not hard-code unrelated project names.
+- The scripts expose `PLUGIN_NAME` / `JAR_FILE` variables that a consumer edits for
+  their own plugin. `buildAndTest.bat` uses generic placeholder values
+  (`PLUGIN-NAME` / `OUTPUT-JAR.jar`), but `buildAndTest.sh` currently hard-codes a
+  specific plugin (`MyMaid4` / `MyMaid4.jar`). Treat these as edit points and do not
+  hard-code unrelated project names.
 - Shell scripts target `bash`; batch scripts target `cmd.exe`. Keep them portable to
   their respective platforms.
 
